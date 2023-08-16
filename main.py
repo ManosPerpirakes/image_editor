@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QApplication, QFileDialog, QWidget, QPushButton, QLa
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
 import os
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageEnhance, ImageFilter
 import shutil
 
 class ImageEditor():
@@ -96,6 +96,16 @@ def bwf():
     except:
         pass
 
+def blurfilter():
+    try:
+        global filename
+        global image
+        image.image = image.image.filter(ImageFilter.BLUR)
+        saveappdata()
+        image.show_image(appdatadir)
+    except:
+        pass
+
 def showChosenImage():
     try:
         global filename
@@ -167,7 +177,8 @@ pb4 = QPushButton("Mirror")
 pb5 = QPushButton("Sharpness")
 pb6 = QPushButton("B/W")
 pb7 = QPushButton('Save')
-lineofpushbuttons = [pb2, pb3, pb4, pb5, pb6]
+pb8 = QPushButton('Blur')
+lineofpushbuttons = [pb2, pb3, pb4, pb5, pb6, pb8]
 lv1 = QVBoxLayout()
 lv2 = QVBoxLayout()
 lh1 = QHBoxLayout()
@@ -192,5 +203,6 @@ pb4.clicked.connect(mirrorf)
 pb5.clicked.connect(sharpf)
 pb6.clicked.connect(bwf)
 pb7.clicked.connect(save)
+pb8.clicked.connect(blurfilter)
 imagenames.currentRowChanged.connect(showChosenImage)
 app.exec()
