@@ -1,1 +1,1 @@
-This project was initally created as a school project, but I made important alterations. Credits for project idea and for the images shown on the preview: Algorithmics Greece
+This project was initally created as a school project, but I made important alterations. You can delete any potential appdata folders from this program after you finish your work. Credits for project idea and for the images shown on the preview: Algorithmics Greece
