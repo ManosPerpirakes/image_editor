@@ -250,3 +250,5 @@ pb14.clicked.connect(smoothen)
 pb15.clicked.connect(smoothenmore)
 imagenames.currentRowChanged.connect(showChosenImage)
 app.exec()
+if os.path.exists(appdatafiledir) and os.path.isdir(appdatafiledir):
+    shutil.rmtree(appdatafiledir)
