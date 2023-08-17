@@ -45,25 +45,31 @@ def showFilenameList():
     except:
         pass
 
-def leftf():
+def imagefilterfunction(filter):
     try:
         global filename
         global image
-        image.image = image.image.transpose(Image.ROTATE_90)
+        image.image = image.image.filter(filter)
+        saveappdata()
+        image.show_image(appdatadir)
+    except:
+        pass 
+
+def imagetransposefunction(rotation):
+    try:
+        global filename
+        global image
+        image.image = image.image.transpose(rotation)
         saveappdata()
         image.show_image(appdatadir)
     except:
         pass
 
+def leftf():
+    imagetransposefunction(Image.ROTATE_90)
+
 def rightf():
-    try:
-        global filename
-        global image
-        image.image = image.image.transpose(Image.ROTATE_270)
-        saveappdata()
-        image.show_image(appdatadir)
-    except:
-        pass
+    imagetransposefunction(Image.ROTATE_270)
 
 def mirrorf():
     try:
@@ -97,14 +103,34 @@ def bwf():
         pass
 
 def blurfilter():
-    try:
-        global filename
-        global image
-        image.image = image.image.filter(ImageFilter.BLUR)
-        saveappdata()
-        image.show_image(appdatadir)
-    except:
-        pass
+    imagefilterfunction(ImageFilter.BLUR)
+
+def contour():
+    imagefilterfunction(ImageFilter.CONTOUR)
+
+def detail():
+    imagefilterfunction(ImageFilter.DETAIL)
+
+def enhance_edge():
+    imagefilterfunction(ImageFilter.EDGE_ENHANCE)
+
+def enhance_edge_plus():
+    imagefilterfunction(ImageFilter.EDGE_ENHANCE_MORE)
+
+def emboss():
+    imagefilterfunction(ImageFilter.EMBOSS)
+
+def find_edges():
+    imagefilterfunction(ImageFilter.FIND_EDGES)
+
+def smoothen():
+    imagefilterfunction(ImageFilter.SMOOTH)
+
+def smoothenmore():
+    imagefilterfunction(ImageFilter.SMOOTH_MORE)
+
+def sharpen():
+    imagefilterfunction(ImageFilter.SHARPEN)
 
 def showChosenImage():
     try:
@@ -178,20 +204,32 @@ pb5 = QPushButton("Sharpness")
 pb6 = QPushButton("B/W")
 pb7 = QPushButton('Save')
 pb8 = QPushButton('Blur')
-lineofpushbuttons = [pb2, pb3, pb4, pb5, pb6, pb8]
+pb9 = QPushButton("Contour")
+pb10 = QPushButton('Enhance edges')
+pb11 = QPushButton("Enhance edges +")
+pb12 = QPushButton('Emboss')
+pb13 = QPushButton('Find edges')
+pb14 = QPushButton('Smoothen')
+pb15 = QPushButton('Smoothen +')
+lineofpushbuttons = [pb2, pb3, pb4, pb5, pb6, pb8, pb9]
+line2ofpushbuttons = [pb10, pb11, pb12, pb13, pb14, pb15]
 lv1 = QVBoxLayout()
 lv2 = QVBoxLayout()
 lh1 = QHBoxLayout()
 lh2 = QHBoxLayout()
 lh3 = QHBoxLayout()
+lh4 = QHBoxLayout()
 lh3.addWidget(pb1)
 lh3.addWidget(pb7)
 lv1.addLayout(lh3)
 lv1.addWidget(imagenames)
 for i in lineofpushbuttons:
     lh1.addWidget(i)
+for i in line2ofpushbuttons:
+    lh4.addWidget(i)
 lv2.addWidget(l1)
 lv2.addLayout(lh1)
+lv2.addLayout(lh4)
 lh2.addLayout(lv1)
 lh2.addLayout(lv2)
 w.setLayout(lh2)
@@ -204,5 +242,12 @@ pb5.clicked.connect(sharpf)
 pb6.clicked.connect(bwf)
 pb7.clicked.connect(save)
 pb8.clicked.connect(blurfilter)
+pb9.clicked.connect(contour)
+pb10.clicked.connect(enhance_edge)
+pb11.clicked.connect(enhance_edge_plus)
+pb12.clicked.connect(emboss)
+pb13.clicked.connect(find_edges)
+pb14.clicked.connect(smoothen)
+pb15.clicked.connect(smoothenmore)
 imagenames.currentRowChanged.connect(showChosenImage)
 app.exec()
