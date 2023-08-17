@@ -11,7 +11,6 @@ class ImageEditor():
         self.filename = None
         self.image_path = None
         self.mod_dir = 'Modified/'
-        self.data_dir = 'appdata/'
     def show_image(self, path):
         l1.hide()
         pixmapimage = QPixmap(path)
@@ -150,7 +149,7 @@ def saveappdata():
         global appdatadir
         global appdatafiledir
         global image
-        path = os.path.join(workdir, image.data_dir)
+        path = os.path.join('appdata/')
         if not(os.path.exists(path)) and not (os.path.isdir(path)):
             os.mkdir(path)
         imgname = 'modified' + str(counter)
