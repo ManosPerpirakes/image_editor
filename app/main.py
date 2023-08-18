@@ -180,11 +180,29 @@ def save():
             image.image.save(image_path)
             workdir = path
             l1.setText('')
-            filenames = filter(os.listdir(workdir),extentions)
+            filenames = filter(os.listdir(workdir), extentions)
             imagenames.clear()
             for file in filenames:
                 imagenames.addItem(file)
             shutil.rmtree(appdatafiledir)
+    except:
+        pass
+
+def delete():
+    try:
+        global image
+        global workdir
+        global filenames
+        global imagenames
+        l1.clear()
+        image = None
+        nameoffiletoremove = os.path.join(workdir, filenames[imagenames.currentRow()])
+        filenames.remove(filenames[imagenames.currentRow()])
+        imagenames.takeItem(imagenames.currentRow())
+        if len(filenames) == 0:
+            shutil.rmtree(workdir)
+        else:
+            os.remove(nameoffiletoremove)
     except:
         pass
 
@@ -210,6 +228,7 @@ pb12 = QPushButton('Emboss')
 pb13 = QPushButton('Find edges')
 pb14 = QPushButton('Smoothen')
 pb15 = QPushButton('Smoothen +')
+pb16 = QPushButton('Delete')
 lineofpushbuttons = [pb2, pb3, pb4, pb5, pb6, pb8, pb9]
 line2ofpushbuttons = [pb10, pb11, pb12, pb13, pb14, pb15]
 lv1 = QVBoxLayout()
@@ -220,6 +239,7 @@ lh3 = QHBoxLayout()
 lh4 = QHBoxLayout()
 lh3.addWidget(pb1)
 lh3.addWidget(pb7)
+lh3.addWidget(pb16)
 lv1.addLayout(lh3)
 lv1.addWidget(imagenames)
 for i in lineofpushbuttons:
@@ -248,6 +268,7 @@ pb12.clicked.connect(emboss)
 pb13.clicked.connect(find_edges)
 pb14.clicked.connect(smoothen)
 pb15.clicked.connect(smoothenmore)
+pb16.clicked.connect(delete)
 imagenames.currentRowChanged.connect(showChosenImage)
 app.exec()
 try:
